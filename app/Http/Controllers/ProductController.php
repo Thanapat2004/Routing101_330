@@ -13,35 +13,35 @@ class ProductController extends Controller
             'name' => 'Laptop',
             'description' => 'High-performance laptop with a powerful processor and sleek design.',
             'price' => 1500,
-            'image' => 'https://helios-i.mashable.com/imagery/articles/05djrP5PjtVB7CcMtvrTOAP/images-1.fill.size_2000x1125.v1723100793.jpg',
+            'image' => 'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/mba13-midnight-select-202402?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1708367688034',
         ],
         [
             'id' => 2,
             'name' => 'Smartphone',
             'description' => 'Latest smartphone with great features and long-lasting battery.',
             'price' => 800,
-            'image' => 'https://img.freepik.com/free-vector/realistic-front-view-smartphone-mockup-mobile-iphone-purple-frame-with-blank-white-display-vector_90220-959.jpg',
+            'image' => 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-pro-finish-select-202409-6-3inch_FMT_WHH?wid=1280&hei=492&fmt=p-jpg&qlt=80&.v=eUdsd0dIb3VUOXdtWkY0VFUwVE8vbEdkZHNlSjBQRklnaFB2d3I5MW94NG9jSVc5R3RiNGUzS3grdnZwVlUzTUpxbExkakZwOW1FVDBpNHlyYVFtRmdLV2FqbzNtY1BxSW9iSE1sc2hZc1YxTkU5SlRjdjdvTkhTWCtMODkzRitFalBpK0hwWWdScERYNkJZQ2JRcUJ3&traceId=1',
         ],
         [
             'id' => 3,
             'name' => 'Tablet',
             'description' => 'Portable tablet for everyday use, perfect for work and play.',
             'price' => 500,
-            'image' => 'https://imagenes.elpais.com/resizer/v2/3XVOVO7OWJE3XADYWXIBWNCXW4.jpg?auth=c89ed0d5ee739f44789ab2380c13ffc964a6050272c800a6bcb93ba9496894a8&width=414',
+            'image' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIk6XyFM7pVETWbNBMFyLbSxmkiTwcJy1cRQ&s',
         ],
         [
             'id' => 4,
             'name' => 'Wireless Headphones',
             'description' => 'Noise-cancelling wireless headphones with great sound quality.',
             'price' => 150,
-            'image' => 'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/MQTR3?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1687660671097',
+            'image' => 'https://www.istudio.store/cdn/shop/files/airpods-max-silver-001.jpg?v=1707290819&width=823',
         ],
         [
             'id' => 5,
             'name' => 'Smartwatch',
             'description' => 'Stylish smartwatch with fitness tracking and notifications.',
             'price' => 250,
-            'image' => 'https://mercular.s3.ap-southeast-1.amazonaws.com/images/products/2024/05/Product/soundpeats-watch-4-smart-watch-black-front-left-view.jpg',
+            'image' => 'https://www.apple.com/newsroom/images/product/watch/standard/Apple_watch-series7_lp_09142021.jpg.og.jpg?202410300031',
         ],
         [
             'id' => 6,
@@ -55,7 +55,7 @@ class ProductController extends Controller
             'name' => '4K Television',
             'description' => 'Ultra HD 4K television with a stunning picture quality.',
             'price' => 1200,
-            'image' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRPkc0pkoCXF1UwrsDtwGKGqYTHfrRtZxrqw&s',
+            'image' => 'https://images.philips.com/is/image/philipsconsumer/a10ea7f6c75a4cf4b7caafaf00cba3dd?$pnglarge$&wid=960',
         ],
         [
             'id' => 8,
@@ -86,8 +86,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Products/Index', [
-            'products' => $this->products,  // ส่งข้อมูลสินค้าไปยัง Vue component
+        return Inertia::render('Products/Index', [ 
+            'products' => $this->products,  // ส่งข้อมูลสินค้าไปยัง  component  products  ในรูปแบบ Array
         ]);
     }
 
@@ -96,7 +96,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $product = collect($this->products)->firstWhere('id', (int) $id);
+        $product = collect($this->products)->firstWhere('id', (int) $id); //ค้นหา id ตรงกับ $id
 
         if (!$product) {
             abort(404, 'Product not found');

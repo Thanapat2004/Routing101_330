@@ -15,6 +15,7 @@ export default withMT({
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                thai: ['Kanit', 'Prompt', 'sans-serif'], // เพิ่มฟอนต์ไทยแบบไม่มีหัว
             },
         },
     },

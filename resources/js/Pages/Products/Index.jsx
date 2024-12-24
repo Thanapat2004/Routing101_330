@@ -1,100 +1,86 @@
 import { usePage } from "@inertiajs/react";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout"; // สำหรับผู้ใช้ที่ล็อกอิน
-import GuestLayout from "@/Layouts/GuestLayout"; // สำหรับผู้ใช้ที่ไม่ได้ล็อกอิน
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import GuestLayout from "@/Layouts/GuestLayout";
 import { Link } from "@inertiajs/react";
-import SimpleFooter from "@/Components/footer"; // เรียกใช้ SimpleFooter
+import { FaArrowRight, FaShoppingCart } from "react-icons/fa"; // เพิ่มไอคอน
 
 export default function Products({ products }) {
-    const { auth } = usePage().props; // ตรวจสอบการล็อกอินของผู้ใช้
+    const { auth } = usePage().props;
 
-    // ตรวจสอบว่า user ล็อกอินหรือไม่
-    if (auth.user) {
-        return (
-            <AuthenticatedLayout>
-                <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 w-full max-w-7xl mx-auto">
-                    <h1 className="text-3xl font-bold mt-10 text-center mb-8 text-gray-500">
-                        Products
-                    </h1>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {products.map((product) => (
-                            <div
-                                key={product.id}
-                                className="card shadow-md p-4 border border-gray-200 rounded-lg transform transition-all duration-100 hover:scale-105 hover:shadow-2xl"
-                            >
-                                <img
-                                    src={product.image}
-                                    alt={product.name}
-                                    className="w-full h-64 object-cover rounded-lg mb-4"
-                                />
-                                <h2 className="text-xl font-semibold">
-                                    {product.name}
-                                </h2>
-                                <p className="text-gray-600 mb-2">
-                                    {product.description.slice(0, 60)}...
-                                </p>
-                                <p className="text-lg font-semibold text-blue-500">
-                                    ${product.price}
-                                </p>
-                                <div className="flex justify-center mt-4">
-                                    <Link
-                                        href={`/products/${product.id}`}
-                                        className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-3 transition duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
-                                    >
-                                        View Details
-                                    </Link>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+    const ProductCard = ({ product }) => (
+        <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform transition-all hover:scale-105">
+            <div className="relative">
+                <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-64 object-cover"
+                />
+                <div className="absolute inset-0 bg-black/20 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <FaShoppingCart className="text-white text-3xl" /> {/* ไอคอนตรงกลาง */}
                 </div>
-            </AuthenticatedLayout>
-        );
-    }
-
-    return (
-        <GuestLayout>
-            <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 w-full max-w-7xl mx-auto">
-                <h1 className="text-3xl font-bold mt-10 text-center mb-8 text-gray-500">
-                    Products
-                </h1>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {products.map((product) => (
-                        <div
-                            key={product.id}
-                            className="card shadow-md p-4 border border-gray-200 rounded-lg transform transition-all duration-100 hover:scale-105 hover:shadow-2xl"
-                        >
-                            <img
-                                src={product.image}
-                                alt={product.name}
-                                className="w-full h-64 object-cover rounded-lg mb-4"
-                            />
-                            <h2 className="text-xl font-semibold">
-                                {product.name}
-                            </h2>
-                            <p className="text-gray-600 mb-2">
-                                {product.description.slice(0, 60)}...
-                            </p>
-                            <p className="text-lg font-semibold text-blue-500">
-                                ${product.price}
-                            </p>
-                            <div className="flex justify-center mt-4">
-                                <Link
-                                    href={`/products/${product.id}`}
-                                    className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-3 transition duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
-                                >
-                                    View Details
-                                </Link>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-                <p className="mt-4 text-center">
-                    <Link href="/login" className="text-blue-500">
-                        Log in to purchase
-                    </Link>
-                </p>
             </div>
-            <SimpleFooter /> {/* เพิ่ม SimpleFooter ที่นี่ */}
+            <div className="flex flex-col p-6 space-y-4">
+                <h3 className="text-2xl font-semibold text-gray-800 truncate">
+                    {product.name}
+                </h3>
+                <p className="text-sm text-gray-500">
+                    {product.description.slice(0, 80)}...
+                </p>
+                <p className="text-xl font-bold text-green-600">${product.price}</p>
+                <Link
+                    href={`/products/${product.id}`}
+                    className="flex items-center justify-center w-full py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-medium rounded-lg hover:from-green-600 hover:to-green-700 transition duration-300"
+                >
+                    View Details <FaArrowRight className="ml-2" /> {/* ไอคอนลูกศร */}
+                </Link>
+            </div>
+        </div>
+    );
+
+    const LayoutWrapper = ({ children }) => (
+        <div className="bg-gray-50 min-h-screen">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">{children}</div>
+        </div>
+    );
+
+    return auth.user ? (
+        <AuthenticatedLayout>
+            <LayoutWrapper>
+                <header className="text-center mb-16">
+                    <h1 className="text-5xl font-bold text-gray-800">
+                        Our Premium Products
+                    </h1>
+                    <p className="text-lg text-gray-600 mt-4">
+                        Handpicked just for you. Discover the difference.
+                    </p>
+                </header>
+                <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    {products.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
+                </section>
+            </LayoutWrapper>
+        </AuthenticatedLayout>
+    ) : (
+        <GuestLayout>
+            <LayoutWrapper>
+                <header className="text-center mb-16">
+                    <h1 className="text-5xl font-bold text-gray-800">
+                        Explore Our Collections
+                    </h1>
+                    <p className="text-lg text-gray-600 mt-4">
+                        Sign in to unlock exclusive access.{" "}
+                        <Link href="/login" className="text-green-600 underline">
+                            Log in now
+                        </Link>
+                    </p>
+                </header>
+                <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    {products.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
+                </section>
+            </LayoutWrapper>
         </GuestLayout>
     );
 }
