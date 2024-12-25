@@ -19,7 +19,8 @@ Route::get('/', function () {
 Route::get('/greeting', function () {
     return 'Hello World';
 });
-Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products', [ProductController::class, 'index'])
+    ->middleware(['auth', 'verified']);
 Route::get('/products/{id}', [ProductController::class, 'show'])
     ->middleware(['auth', 'verified']);
 Route::get('/user', [UserController::class, 'index']);
